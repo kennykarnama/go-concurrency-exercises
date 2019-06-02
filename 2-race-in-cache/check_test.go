@@ -6,17 +6,21 @@
 
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/kennykarnama/go-concurrency-exercises/2-race-in-cache/fake"
+)
 
 func TestMain(t *testing.T) {
-	cache := run()
+	cache := fake.Run()
 
-	cacheLen := len(cache.cache)
-	pagesLen := cache.pages.Len()
-	if cacheLen != CacheSize {
+	cacheLen := len(cache.Cache)
+	pagesLen := cache.Pages.Len()
+	if cacheLen != fake.CacheSize {
 		t.Errorf("Incorrect cache size %v", cacheLen)
 	}
-	if pagesLen != CacheSize {
+	if pagesLen != fake.CacheSize {
 		t.Errorf("Incorrect pages size %v", pagesLen)
 	}
 }

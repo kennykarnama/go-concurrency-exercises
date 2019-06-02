@@ -1,10 +1,4 @@
-//////////////////////////////////////////////////////////////////////
-//
-// DO NOT EDIT THIS PART
-// Your task is to edit `main.go`
-//
-
-package main
+package fake
 
 // MockDB used to simulate a database model
 type MockDB struct{}
