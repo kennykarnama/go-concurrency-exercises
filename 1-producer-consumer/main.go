@@ -11,12 +11,14 @@ package main
 import (
 	"fmt"
 	"time"
+
+	"github.com/kennykarnama/go-concurrency-exercises/1-producer-consumer/procon"
 )
 
-func producer(stream Stream) (tweets []*Tweet) {
+func producer(stream procon.Stream) (tweets []*procon.Tweet) {
 	for {
 		tweet, err := stream.Next()
-		if err == ErrEOF {
+		if err == procon.ErrEOF {
 			return tweets
 		}
 
@@ -24,7 +26,7 @@ func producer(stream Stream) (tweets []*Tweet) {
 	}
 }
 
-func consumer(tweets []*Tweet) {
+func consumer(tweets []*procon.Tweet) {
 	for _, t := range tweets {
 		if t.IsTalkingAboutGo() {
 			fmt.Println(t.Username, "\ttweets about golang")
@@ -36,7 +38,7 @@ func consumer(tweets []*Tweet) {
 
 func main() {
 	start := time.Now()
-	stream := GetMockStream()
+	stream := procon.GetMockStream()
 
 	// Producer
 	tweets := producer(stream)
