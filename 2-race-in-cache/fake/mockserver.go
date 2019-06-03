@@ -52,7 +52,6 @@ func (k *KeyStoreCache) Get(key string) string {
 
 	if !ok {
 		val = k.Load(key)
-
 		k.Cache[key] = val
 		k.Pages.PushFront(key)
 

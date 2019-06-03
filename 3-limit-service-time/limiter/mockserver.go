@@ -4,13 +4,39 @@
 // Your task is to edit `main.go`
 //
 
-package main
+package limiter
 
 import (
 	"fmt"
 	"sync"
 	"time"
 )
+
+// User defines the UserModel. Use this to check whether a User is a
+// Premium user or not
+type User struct {
+	ID        int
+	IsPremium bool
+	TimeUsed  int64 // in seconds
+}
+
+// HandleRequest runs the processes requested by users. Returns false
+// if process had to be killed
+func HandleRequest(process func(), u *User) bool {
+
+	select {
+	case <-time.Tick(10 * time.Second):
+		if u.IsPremium {
+			return true
+		} else {
+			return false
+		}
+	default:
+
+	}
+	process()
+	return true
+}
 
 var wg sync.WaitGroup
 
