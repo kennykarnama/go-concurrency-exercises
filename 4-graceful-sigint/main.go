@@ -13,10 +13,38 @@
 
 package main
 
-func main() {
-	// Create a process
-	proc := MockProcess{}
+import (
+	"os"
+	"os/signal"
+	"syscall"
 
-	// Run the process (blocking)
+	signint "github.com/kennykarnama/go-concurrency-exercises/4-graceful-sigint/signit"
+)
+
+func main() {
+	proc := signint.MockProcess{}
+
+	sig := make(chan os.Signal)
+	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+	var counter int
+	go func() {
+		for {
+			select {
+			case <-sig:
+				counter++
+				//fmt.Printf("Interrupted\n")
+				go func() {
+					proc.Stop()
+				}()
+				if counter == 2 {
+					os.Exit(1)
+				}
+
+			}
+		}
+		// os.Exit(1)
+
+	}()
+
 	proc.Run()
 }

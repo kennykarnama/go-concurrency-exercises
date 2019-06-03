@@ -4,7 +4,7 @@
 // Your task is to edit `main.go`
 //
 
-package main
+package signint
 
 import (
 	"fmt"
@@ -23,7 +23,7 @@ func (m *MockProcess) Run() {
 
 	fmt.Print("Process running..")
 	for {
-		fmt.Print(".")
+		fmt.Print("-RUN-")
 		time.Sleep(1 * time.Second)
 	}
 }
